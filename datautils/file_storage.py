@@ -39,7 +39,7 @@ class FileStorage:
             with open(file_path, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
 
-            self.logger.info(f'数据已成功保存到 {file_path}')
+            self.logger.debug(f'数据已成功保存到 {file_path}')
             return True
 
         except Exception as e:
@@ -66,7 +66,7 @@ class FileStorage:
                 df = data
 
             df.to_csv(file_path, index=False, encoding='utf-8-sig')
-            self.logger.info(f'数据已成功保存到 {file_path}')
+            self.logger.debug(f'数据已成功保存到 {file_path}')
             return True
 
         except Exception as e:
@@ -101,7 +101,7 @@ class FileStorage:
                     df[col] = df[col].astype('datetime64[us]')
 
             df.to_parquet(file_path, index=False)
-            self.logger.info(f'数据已成功保存到 {file_path}')
+            self.logger.debug(f'数据已成功保存到 {file_path}')
             return True
 
         except Exception as e:
@@ -235,9 +235,9 @@ class FileStorage:
         """
         try:
             self.logger.debug(f'开始从多个表执行SQL查询: {table_paths}')
-            
+
             conn = duckdb.connect(database=':memory:')
-            
+
             # 为每个表创建视图
             for table_name, paths in table_paths.items():
                 # 确保paths是列表
